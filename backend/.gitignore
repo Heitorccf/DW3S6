@@ -9,11 +9,11 @@ yarn-error.log*
 pgdata/
 *.pid
 
-# Arquivos de ambiente
-.env
-
 # Dependências do Node.js
 node_modules/
+node_modules/**
+
+# Build do TypeScript
 build/
 dist/
 
@@ -24,8 +24,8 @@ dist/
 .cache/
 .tmp/
 
-# Arquivos de compilação
-build/
+# Arquivos de ambiente
+.env
 
 # Cobertura de Testes
 coverage/
@@ -40,9 +40,11 @@ coverage/
 .DS_Store
 Thumbs.db
 
-# Editor de Texto (ex.: VSCode)
+# Configurações de IDEs
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
-*.swp
+
+# Configurações de Lint
+.eslintcache
