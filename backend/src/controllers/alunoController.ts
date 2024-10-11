@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
 import { getAllAlunos, getAlunoByID, insertAluno, updateAluno, deleteAluno } from "../models/alunoModel";
+import { validationResult } from "express-validator";
 
 // Controlador para buscar todos os alunos
 export const getAllAlunosController = async (req: Request, res: Response) => {
@@ -12,15 +12,14 @@ export const getAllAlunosController = async (req: Request, res: Response) => {
   }
 };
 
-// Controlador para buscar aluno por ID
+// Controlador para buscar um aluno por ID
 export const getAlunoByIDController = async (req: Request, res: Response) => {
   try {
     const aluno = await getAlunoByID(Number(req.params.id));
-    if (aluno) {
-      res.status(200).json(aluno);
-    } else {
-      res.status(404).json({ error: "Aluno não encontrado" });
+    if (!aluno) {
+      return res.status(404).json({ error: "Aluno não encontrado" });
     }
+    res.status(200).json(aluno);
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar aluno" });
   }
@@ -52,11 +51,10 @@ export const updateAlunoController = async (req: Request, res: Response) => {
   try {
     const { nome, endereco, cursoid } = req.body;
     const alunoAtualizado = await updateAluno(Number(req.params.id), nome, endereco, cursoid);
-    if (alunoAtualizado) {
-      res.status(200).json(alunoAtualizado);
-    } else {
-      res.status(404).json({ error: "Aluno não encontrado" });
+    if (!alunoAtualizado) {
+      return res.status(404).json({ error: "Aluno não encontrado" });
     }
+    res.status(200).json(alunoAtualizado);
   } catch (error) {
     res.status(500).json({ error: "Erro ao atualizar aluno" });
   }
@@ -66,11 +64,10 @@ export const updateAlunoController = async (req: Request, res: Response) => {
 export const deleteAlunoController = async (req: Request, res: Response) => {
   try {
     const alunoDeletado = await deleteAluno(Number(req.params.id));
-    if (alunoDeletado) {
-      res.status(200).json(alunoDeletado);
-    } else {
-      res.status(404).json({ error: "Aluno não encontrado" });
+    if (!alunoDeletado) {
+      return res.status(404).json({ error: "Aluno não encontrado" });
     }
+    res.status(200).json(alunoDeletado);
   } catch (error) {
     res.status(500).json({ error: "Erro ao deletar aluno" });
   }

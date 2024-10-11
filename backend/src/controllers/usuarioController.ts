@@ -2,15 +2,20 @@ import { Request, Response } from "express";
 import { getUserByUsername, insertUser } from "../models/usuarioModel";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { validationResult } from "express-validator";
 
-// Função para realizar o login e gerar o JWT
+// Controlador para realizar o login de usuários
 export const login = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { username, password } = req.body;
 
   try {
     // Buscar o usuário no banco de dados
     const user = await getUserByUsername(username);
-
     if (!user) {
       return res.status(404).json({ error: "Usuário não encontrado" });
     }
@@ -23,17 +28,22 @@ export const login = async (req: Request, res: Response) => {
 
     // Gerar o token JWT
     const token = jwt.sign({ userId: user.usuarioid }, process.env.SECRET_API || "secret", {
-      expiresIn: "1h", // Token válido por 1 hora
+      expiresIn: "1h"
     });
 
-    return res.status(200).json({ auth: true, token });
+    res.status(200).json({ auth: true, token });
   } catch (error) {
-    return res.status(500).json({ error: "Erro no servidor" });
+    res.status(500).json({ error: "Erro no servidor" });
   }
 };
 
-// Função para registrar um novo usuário (apenas para testes)
+// Controlador para registrar um novo usuário
 export const register = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { username, password } = req.body;
 
   try {
@@ -42,26 +52,8 @@ export const register = async (req: Request, res: Response) => {
 
     // Inserir o novo usuário no banco de dados
     const newUser = await insertUser(username, hashedPassword);
-    return res.status(201).json(newUser);
+    res.status(201).json(newUser);
   } catch (error) {
-    return res.status(500).json({ error: "Erro ao registrar usuário" });
+    res.status(500).json({ error: "Erro ao registrar usuário" });
   }
-};
-
-// Função para verificar se o token JWT é válido
-export const verifyToken = (req: Request, res: Response, next: Function) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ auth: false, message: "Nenhum token fornecido." });
-  }
-
-  jwt.verify(token, process.env.SECRET_API || "secret", (err, decoded) => {
-    if (err) {
-      return res.status(500).json({ auth: false, message: "Falha ao autenticar o token." });
-    }
-
-    req.body.userId = decoded?.userId;
-    next();
-  });
 };

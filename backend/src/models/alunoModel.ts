@@ -30,11 +30,8 @@ export const updateAluno = async (id: number, nome: string, endereco: string, cu
   return result.rows[0];
 };
 
-// Função para deletar um aluno
+// Função para deletar um aluno (soft delete)
 export const deleteAluno = async (id: number) => {
-  const result = await pool.query(
-    "UPDATE alunos SET deleted = true WHERE alunoid = $1 RETURNING *",
-    [id]
-  );
+  const result = await pool.query("UPDATE alunos SET deleted = true WHERE alunoid = $1 RETURNING *", [id]);
   return result.rows[0];
 };
