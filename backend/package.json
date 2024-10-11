@@ -1,0 +1,57 @@
+{
+  "name": "dw3-backend",
+  "version": "1.0.0",
+  "description": "Backend do Projeto DW3 - API RESTful com Node.js, TypeScript, PostgreSQL e JWT",
+  "main": "build/app.js",
+  "scripts": {
+    "dev": "ts-node-dev src/app.ts",
+    "build": "tsc",
+    "start": "node build/app.js",
+    "test": "jest",
+    "lint": "eslint .",
+    "prestart": "npm run build",
+    "backup": "docker exec -t <nome_do_container_postgres> pg_dumpall -c -U postgres > backup.sql"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "TypeScript",
+    "PostgreSQL",
+    "JWT",
+    "API RESTful"
+  ],
+  "author": "Heitor",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.0",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.12",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/node": "^16.11.10",
+    "@types/pg": "^8.6.0",
+    "@types/winston": "^2.4.4",
+    "eslint": "^7.32.0",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ]
+  }
+}

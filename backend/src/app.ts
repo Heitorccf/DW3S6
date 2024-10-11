@@ -1,23 +1,48 @@
-// Importações necessárias
 import express from "express";
 import dotenv from "dotenv";
+import helmet from "helmet";
+import cors from "cors";
+import bodyParser from "body-parser";
+import { json, urlencoded } from "express";
+import errorHandler from "./middleware/errorHandler";
+import alunoRoutes from "./routes/alunoRoutes";
+import cursoRoutes from "./routes/cursoRoutes";
+import authRoutes from "./routes/authRoutes";
 
-// Carregar as variáveis de ambiente do arquivo .env
+// Carregar variáveis de ambiente do arquivo .env
 dotenv.config();
 
-// Configuração inicial do servidor
+// Criar a aplicação Express
 const app = express();
-const port = process.env.PORT || 40000;
 
-// Configurações para o servidor processar JSON
-app.use(express.json());
+// Middleware de segurança
+app.use(helmet());
 
-// Rota inicial para testar o servidor
+// Habilitar CORS (Cross-Origin Resource Sharing)
+app.use(cors());
+
+// Middleware para parsear JSON e dados de formulários
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Definir as rotas
+app.use("/api/alunos", alunoRoutes);
+app.use("/api/cursos", cursoRoutes);
+app.use("/api/auth", authRoutes);
+
+// Rota raiz de teste
 app.get("/", (req, res) => {
-  res.send("Servidor backend rodando...");
+  res.send("API DW3 - Backend rodando!");
 });
 
-// Iniciar o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+// Middleware de tratamento de erros (centralizado)
+app.use(errorHandler);
+
+// Configurar a porta e iniciar o servidor
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+export default app;

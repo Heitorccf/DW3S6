@@ -1,0 +1,31 @@
+# Aplique a configuração para todos os arquivos
+root = true
+
+[*]
+# Indenta usando espaços, com 2 espaços de indentação por padrão
+indent_style = space
+indent_size = 2
+
+# Final de linha padrão Unix (LF)
+end_of_line = lf
+
+# Charset UTF-8
+charset = utf-8
+
+# Insira uma nova linha ao final de cada arquivo
+insert_final_newline = true
+
+# Remover espaços em branco extras ao final de linhas
+trim_trailing_whitespace = true
+
+# Configurações para arquivos Markdown, JSON, YAML
+[*.md, *.json, *.yml, *.yaml]
+indent_size = 2
+
+# Configurações para arquivos Makefile (que exigem indentação com tab)
+[Makefile]
+indent_style = tab
+
+# Configurações específicas para arquivos JavaScript e TypeScript
+[*.js, *.ts]
+indent_size = 2

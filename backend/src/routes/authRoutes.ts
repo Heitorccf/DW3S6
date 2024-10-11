@@ -1,17 +1,27 @@
 import { Router } from "express";
-import { login, register, verifyToken } from "../controllers/usuarioController";
+import { body } from "express-validator";
+import { login, register } from "../controllers/usuarioController";
 
 const router = Router();
 
 // Rota para login de usuários
-router.post("/login", login);
+router.post(
+  "/login",
+  [
+    body("username").notEmpty().withMessage("Nome de usuário é obrigatório"),
+    body("password").notEmpty().withMessage("Senha é obrigatória")
+  ],
+  login
+);
 
-// Rota para registrar um novo usuário (para testes)
-router.post("/register", register);
-
-// Rota protegida para verificar o token
-router.get("/verify", verifyToken, (req, res) => {
-  res.status(200).json({ message: "Token válido!" });
-});
+// Rota para registrar um novo usuário
+router.post(
+  "/register",
+  [
+    body("username").notEmpty().withMessage("Nome de usuário é obrigatório"),
+    body("password").isLength({ min: 6 }).withMessage("A senha deve ter no mínimo 6 caracteres")
+  ],
+  register
+);
 
 export default router;
