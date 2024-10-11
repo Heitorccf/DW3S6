@@ -1,0 +1,398 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DW3 API",
+    "description": "Documentação da API para o projeto DW3, uma API RESTful para gerenciamento de Alunos, Cursos e Autenticação de Usuários.",
+    "contact": {
+      "name": "Heitor",
+      "email": "heitor@example.com"
+    }
+  },
+  "host": "localhost:40000",
+  "basePath": "/api",
+  "schemes": ["http"],
+  "paths": {
+    "/alunos": {
+      "get": {
+        "summary": "Obter todos os alunos",
+        "description": "Retorna uma lista de todos os alunos cadastrados.",
+        "tags": ["Alunos"],
+        "responses": {
+          "200": {
+            "description": "Lista de alunos retornada com sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Aluno"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo aluno",
+        "description": "Cria um novo aluno no sistema.",
+        "tags": ["Alunos"],
+        "parameters": [
+          {
+            "name": "Aluno",
+            "in": "body",
+            "description": "Dados do novo aluno",
+            "schema": {
+              "$ref": "#/definitions/AlunoInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Aluno criado com sucesso"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/alunos/{id}": {
+      "get": {
+        "summary": "Obter um aluno por ID",
+        "description": "Retorna um aluno com base no ID fornecido.",
+        "tags": ["Alunos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do aluno"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aluno retornado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Aluno"
+            }
+          },
+          "404": {
+            "description": "Aluno não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um aluno",
+        "description": "Atualiza os dados de um aluno existente.",
+        "tags": ["Alunos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do aluno"
+          },
+          {
+            "name": "Aluno",
+            "in": "body",
+            "description": "Dados do aluno atualizados",
+            "schema": {
+              "$ref": "#/definitions/AlunoInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aluno atualizado com sucesso"
+          },
+          "404": {
+            "description": "Aluno não encontrado"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Deletar um aluno",
+        "description": "Remove um aluno do sistema.",
+        "tags": ["Alunos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do aluno"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aluno deletado com sucesso"
+          },
+          "404": {
+            "description": "Aluno não encontrado"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/cursos": {
+      "get": {
+        "summary": "Obter todos os cursos",
+        "description": "Retorna uma lista de todos os cursos cadastrados.",
+        "tags": ["Cursos"],
+        "responses": {
+          "200": {
+            "description": "Lista de cursos retornada com sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Curso"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Criar um novo curso",
+        "description": "Cria um novo curso no sistema.",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "Curso",
+            "in": "body",
+            "description": "Dados do novo curso",
+            "schema": {
+              "$ref": "#/definitions/CursoInput"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Curso criado com sucesso"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/cursos/{id}": {
+      "get": {
+        "summary": "Obter um curso por ID",
+        "description": "Retorna um curso com base no ID fornecido.",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do curso"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Curso retornado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/Curso"
+            }
+          },
+          "404": {
+            "description": "Curso não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um curso",
+        "description": "Atualiza os dados de um curso existente.",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do curso"
+          },
+          {
+            "name": "Curso",
+            "in": "body",
+            "description": "Dados do curso atualizados",
+            "schema": {
+              "$ref": "#/definitions/CursoInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Curso atualizado com sucesso"
+          },
+          "404": {
+            "description": "Curso não encontrado"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Deletar um curso",
+        "description": "Remove um curso do sistema.",
+        "tags": ["Cursos"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do curso"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Curso deletado com sucesso"
+          },
+          "404": {
+            "description": "Curso não encontrado"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login de usuário",
+        "description": "Autenticação de usuário via JWT.",
+        "tags": ["Autenticação"],
+        "parameters": [
+          {
+            "name": "Credenciais",
+            "in": "body",
+            "description": "Dados de login",
+            "schema": {
+              "$ref": "#/definitions/LoginInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "description": "Token JWT"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de autenticação"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Aluno": {
+      "type": "object",
+      "properties": {
+        "alunoid": {
+          "type": "integer"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "endereco": {
+          "type": "string"
+        },
+        "cursoid": {
+          "type": "integer"
+        }
+      }
+    },
+    "AlunoInput": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string"
+        },
+        "endereco": {
+          "type": "string"
+        },
+        "cursoid": {
+          "type": "integer"
+        }
+      }
+    },
+    "Curso": {
+      "type": "object",
+      "properties": {
+        "cursoid": {
+          "type": "integer"
+        },
+        "codigo": {
+          "type": "string"
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "ativo": {
+          "type": "boolean"
+        }
+      }
+    },
+    "CursoInput": {
+      "type": "object",
+      "properties": {
+        "codigo": {
+          "type": "string"
+        },
+        "descricao": {
+          "type": "string"
+        },
+        "ativo": {
+          "type": "boolean"
+        }
+      }
+    },
+    "LoginInput": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Token para autenticação"
+    }
+  }
+}
