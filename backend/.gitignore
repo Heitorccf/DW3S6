@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios do Docker
+pgdata/
+*.pid
+
+# Arquivos de ambiente
+.env
+
+# Dependências do Node.js
+node_modules/
+build/
+dist/
+
+# Arquivos de saída do TypeScript
+*.tsbuildinfo
+
+# Diretórios de cache
+.cache/
+.tmp/
+
+# Arquivos de compilação
+build/
+
+# Cobertura de Testes
+coverage/
+
+# Logs do PM2
+.pids
+*.pid
+*.seed
+*.pid.lock
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor de Texto (ex.: VSCode)
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
